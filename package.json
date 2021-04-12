@@ -1,0 +1,30 @@
+{
+    "name": "grapesjs-netlify",
+    "version": "1.0.0",
+    "description": "Grapesjs Netlify",
+    "main": "dist/grapesjs-netlify.min.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Ju99ernaut/grapesjs-netlify.git"
+    },
+    "scripts": {
+        "start": "grapesjs-cli serve",
+        "build": "grapesjs-cli build",
+        "build:css": "sass src/styles.scss dist/grapesjs-netlify.min.css --style compressed",
+        "watch:scss": "sass --watch src/styles.scss dist/grapesjs-netlify.min.css --style compressed",
+        "bump": "npm version patch -m 'Bump v%s'"
+    },
+    "keywords": [
+        "grapesjs",
+        "plugin"
+    ],
+    "devDependencies": {
+        "grapesjs-cli": "^1.0.15",
+        "sass": "^1.32.8"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "netlify": "^6.1.16",
+        "time-ago": "^0.2.1"
+    }
+}
