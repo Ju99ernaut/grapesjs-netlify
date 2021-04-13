@@ -19,6 +19,35 @@ export default (editor, opts = {}) => {
 
       // On invalid token
       onInvalidToken: () => alert('No token in path, don\'t worry if you added token in config'),
+
+      // On deploy succes
+      onDeploy() { },
+
+      // Opts for code export
+      addExportBtn: true,
+      btnLabel: 'Export to Zip',
+      filenamePfx: 'grapesjs_template',
+      filename: null,
+      root: {
+        css: {
+          'style.css': ed => ed.getCss(),
+        },
+        'index.html': ed =>
+          `<!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8"/>
+          <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+          <meta name="description" content="Site built using grapesjs editor">
+          <title>Grapesjs Site</title>
+        </head>
+        <body>
+          ${ed.getHtml()}
+        </body>
+        </html>`
+      },
+      isBinary: null,
     }, ...opts
   };
 
