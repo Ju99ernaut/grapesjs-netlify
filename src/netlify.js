@@ -17,7 +17,6 @@ export default class NetlifyDashboard {
         this.opts = opts;
         this.$ = editor.$;
         this.onRender = this.onRender.bind(this);
-        this.deploy = this.deploy.bind(this);
 
         const response = parseHash(window.location.hash);
         /* Clear hash */
@@ -86,17 +85,31 @@ export default class NetlifyDashboard {
         });
     }
 
-    async deploy() {
+    deploy = () => {
         const { projectId, user } = this.state;
-        if (projectId) {
-            // deploy inSite
-            //const deploys = await api(window.atob(user.token), 'sites');
-            console.log('deploy: ', projectId);
-        } else {
-            // deploy new
-            console.log('deploy: New');
+        const { editor, opts } = this;
+        editor.runCommand('gjs-export-zip', { save: false, clb });
+        async function clb(content, filename) {
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/zip',
+                    Authorization: `Bearer ${window.atob(user.token)}`
+                },
+                body: content
+            };
+            if (projectId) {
+                // deploy inSite
+                const deploys = await api(window.atob(user.token), `sites/${projectId}/deploys`, {}, options);
+                opts.onDeploy(deploys);
+                console.log('deploy: ', deploys);
+            } else {
+                // deploy new
+                const deploys = await api(window.atob(user.token), `sites`, {}, options);
+                opts.onDeploy(deploys);
+                console.log('deploy: ', deploys);
+            }
         }
-        // onSuccess, onError callback
     }
 
     handleAuth = e => {
