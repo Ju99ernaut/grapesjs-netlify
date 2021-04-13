@@ -24,6 +24,8 @@
     },
     "license": "MIT",
     "dependencies": {
+        "file-saver": "^2.0.5",
+        "jszip": "^3.6.0",
         "netlify": "^6.1.16",
         "time-ago": "^0.2.1"
     }
