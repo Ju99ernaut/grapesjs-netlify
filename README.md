@@ -1,13 +1,17 @@
 # Grapesjs Netlify
 
+> This plugin implements a custom but similar [grapesjs-plugin-export](https://github.com/artf/grapesjs-plugin-export) so there is no need to install it.
+
+Netlify dashboard for deploying sites directly in grapesjs
+
+![Screenshot](Screenshot.png)
+
 [DEMO](##)
-> **Provide a live demo of your plugin**
-For a better user engagement create a simple live demo by using services like [JSFiddle](https://jsfiddle.net) [CodeSandbox](https://codesandbox.io) [CodePen](https://codepen.io) and link it here in your README (attaching a screenshot/gif will also be a plus).
-To help you in this process here below you will find the necessary HTML/CSS/JS, so it just a matter of copy-pasting on some of those services. After that delete this part and update the link above
 
 ### HTML
 ```html
 <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
+<link href="https://unpkg.com/grapesjs-netlify/dist/grapesjs-netlify.min.css" rel="stylesheet">
 <script src="https://unpkg.com/grapesjs"></script>
 <script src="https://unpkg.com/grapesjs-netlify"></script>
 
@@ -37,14 +41,11 @@ body, html {
 ## Summary
 
 * Plugin name: `grapesjs-netlify`
-* Components
-    * `component-id-1`
-    * `component-id-2`
-    * ...
-* Blocks
-    * `block-id-1`
-    * `block-id-2`
-    * ...
+* Commands
+    * `netlify-dashboard`
+    * `gjs-export-zip`
+* API
+    * `editor.NetlifyDashboard`
 
 
 
@@ -52,9 +53,39 @@ body, html {
 
 | Option | Description | Default |
 |-|-|-
-| `option1` | Description option | `default value` |
+| `token` | Personal netlify access token | ` ` |
+| `mdlTitle` | Modal title | `Netlify Dashboard` |
+| `authUrl` | Use this to authenticate instead of providing `token` | `/.netlify/functions/auth-start` |
+| `loader` | Loader element | ` ` |
+| `onInvalidToken` | Invalid token durin auth | `check source` |
+| `onDeploy` | On successful site deploy | `check source` |
+| `addExportBtn` | Add button inside the export dialog | `true` |
+| `btnLabel` | Label for the export button | `Export to ZIP` |
+| `filenamePfx` | ZIP filename prefix | `grapesjs_template` |
+| `filename` | Use a function to generate the filename eg.`filename: ed => 'file.zip'` | `null` |
+| `root` | Use the root object to create the folder structure of the your zip(async functions are supported) | `{...check source}` |
 
 
+Using `async` in `root`:
+
+```js
+{
+  css: {
+    'style.css': ed => ed.getCss(),
+    'file.txt': 'My custom content',
+  },
+  img: async ed => {
+    const images = await fetchImagesByStructure(ed.getComponents());
+    return images;
+    // Where `images`:
+    // { 'img1.png': '...png content', ... }
+  }
+  'index.html': ed => `<body>${ed.getHtml()}</body>`
+}
+```
+
+* `authUrl` reference https://github.com/netlify-labs/oauth-example
+* serverless function template https://github.com/Ju99ernaut/netlify-auth-serverless
 
 ## Download
 
@@ -72,6 +103,7 @@ body, html {
 Directly in the browser
 ```html
 <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet"/>
+<link href="https://unpkg.com/grapesjs-netlify/dist/grapesjs-netlify.min.css" rel="stylesheet">
 <script src="https://unpkg.com/grapesjs"></script>
 <script src="path/to/grapesjs-netlify.min.js"></script>
 
@@ -94,6 +126,7 @@ Modern javascript
 import grapesjs from 'grapesjs';
 import plugin from 'grapesjs-netlify';
 import 'grapesjs/dist/css/grapes.min.css';
+import 'grapesjs-netlify/dist/grapesjs-netlify.min.css'
 
 const editor = grapesjs.init({
   container : '#gjs',
@@ -124,6 +157,12 @@ Install dependencies
 
 ```sh
 $ npm i
+```
+
+Build sass
+
+```sh
+$ npm run build:css
 ```
 
 Start the dev server
