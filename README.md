@@ -57,8 +57,10 @@ body, html {
 | `mdlTitle` | Modal title | `Netlify Dashboard` |
 | `authUrl` | Use this to authenticate instead of providing `token` | `/.netlify/functions/auth-start` |
 | `loader` | Loader element | ` ` |
+| `nodeploys` | No deploys element | ` ` |
 | `onInvalidToken` | Invalid token durin auth | `check source` |
 | `onDeploy` | On successful site deploy | `check source` |
+| `onDeployErr` | On error site deploy | `check source` |
 | `addExportBtn` | Add button inside the export dialog | `true` |
 | `btnLabel` | Label for the export button | `Export to ZIP` |
 | `filenamePfx` | ZIP filename prefix | `grapesjs_template` |
@@ -177,7 +179,12 @@ Build the source
 $ npm run build
 ```
 
+## To Do
 
+If you're interested in contributing to the project these could be good starting points
+
+- [ ] Serverless functions
+- [ ] More settings(Domain management)
 
 ## License
 
