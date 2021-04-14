@@ -61,8 +61,9 @@ export default (editor, opts = {}) => {
             }
         },
 
-        run(editor, options = { save: true, clb: null }) {
+        run(editor, sender, options = { save: true, clb: null }) {
             const zip = new JSZip();
+            const { save, clb } = options;
             this.createDirectory(zip, opts.root)
                 .then(() => {
                     zip.generateAsync({ type: 'blob' })
@@ -70,7 +71,7 @@ export default (editor, opts = {}) => {
                             const filenameFn = opts.filename
                             let filename = filenameFn ? filenameFn(editor) :
                                 `${opts.filenamePfx}_${Date.now()}.zip`;
-                            options.save && FileSaver.saveAs(content, filename);
+                            save && FileSaver.saveAs(content, filename);
                             clb && clb(content, filename);
                         });
                 });
