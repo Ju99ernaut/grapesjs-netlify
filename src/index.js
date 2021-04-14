@@ -17,11 +17,24 @@ export default (editor, opts = {}) => {
       // Loader element
       loader: '',
 
+      // No deploys element
+      nodeploys: '',
+
       // On invalid token
-      onInvalidToken: () => alert('No token in path, don\'t worry if you added token in config'),
+      onInvalidToken() {
+        alert('No token in path, don\'t worry if you added token in config');
+      },
 
       // On deploy succes
-      onDeploy() { },
+      onDeploy(deploy) {
+        alert(`Successful deployment\n${deploy.url}`);
+      },
+
+      // On deploy error
+      onDeployErr(err) {
+        alert('Deployment failed');
+        console.log(err);
+      },
 
       // Opts for code export
       addExportBtn: true,
@@ -40,6 +53,7 @@ export default (editor, opts = {}) => {
           <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
           <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
           <meta name="description" content="Site built using grapesjs editor">
+          <link rel="stylesheet" href="./css/style.css"/>
           <title>Grapesjs Site</title>
         </head>
         <body>
