@@ -88,8 +88,8 @@ export default class NetlifyDashboard {
     deploy = () => {
         const { projectId, user } = this.state;
         const { editor, opts } = this;
-        editor.runCommand('gjs-export-zip', { save: false, clb });
-        async function clb(content, filename) {
+        const clb = (content, filename) => {
+            let url;
             const options = {
                 method: 'POST',
                 headers: {
@@ -98,18 +98,16 @@ export default class NetlifyDashboard {
                 },
                 body: content
             };
-            if (projectId) {
-                // deploy inSite
-                const deploys = await api(window.atob(user.token), `sites/${projectId}/deploys`, {}, options);
-                opts.onDeploy(deploys);
-                console.log('deploy: ', deploys);
-            } else {
-                // deploy new
-                const deploys = await api(window.atob(user.token), `sites`, {}, options);
-                opts.onDeploy(deploys);
-                console.log('deploy: ', deploys);
-            }
+            if (projectId) url = `sites/${projectId}/deploys`;
+            else url = `sites`;
+            api('', url, {}, options)
+                .then(res => {
+                    opts.onDeploy(res);
+                    console.log('deploy: ', res);
+                })
+                .catch(err => opts.onDeployErr(err));
         }
+        editor.runCommand('gjs-export-zip', { save: false, clb });
     }
 
     handleAuth = e => {
