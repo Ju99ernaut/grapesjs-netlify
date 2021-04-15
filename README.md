@@ -183,7 +183,8 @@ $ npm run build
 
 If you're interested in contributing to the project these could be good starting points
 
-- [ ] Serverless functions
+- [ ] Multi-page deploys
+- [ ] Serverless functions (See `functions` branch)
 - [ ] More settings(Domain management)
 
 ## License
