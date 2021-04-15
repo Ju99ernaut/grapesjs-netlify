@@ -65,6 +65,16 @@ export default (editor, opts = {}) => {
     }, ...opts
   };
 
+  // Add remove
+  if (!('remove' in Element.prototype)) {
+    Element.prototype.remove = function () {
+      if (this.parentNode) {
+        alert(this.innerHTML);
+        this.parentNode.removeChild(this);
+      }
+    };
+  }
+
   // Init and add dashboard object to editor
   editor.NetlifyDashboard = new NetlifyDashboard(editor, options);
 
