@@ -143,7 +143,7 @@ export default class NetlifyDashboard {
         }
     }
 
-    renderSiteList = () => {
+    renderSiteList() {
         const { sites, filterText, loading, sortBy, sortOrder } = this.state;
 
         if (loading) {
@@ -269,7 +269,7 @@ export default class NetlifyDashboard {
         return matchingSites;
     }
 
-    update = () => {
+    update() {
         this.$el?.find('#site-list').html(this.renderSiteList());
         const sites = this.$el?.find('.site-wrapper');
         this.setStateSilent({ projectId: '' });
@@ -282,7 +282,7 @@ export default class NetlifyDashboard {
         }
     }
 
-    render = () => {
+    render() {
         const { user } = this.state;
         const { $ } = this;
 
