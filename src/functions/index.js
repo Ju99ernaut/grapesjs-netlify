@@ -12,8 +12,10 @@ export default (editor, opts = {}) => {
             mdlDialog.classList.add(mdlClass);
             sender?.set && sender.set('active');
             mdl.setTitle(opts.mdlTitle);
-            mdl.setContent(flowchart(editor, opts));
+            const { $el, flowEditor } = flowchart(editor, opts)
+            mdl.setContent($el);
             mdl.open();
+            flowEditor.changeModule('Home');
             mdl.getModel().once('change:open', () => {
                 mdlDialog.classList.remove(mdlClass);
             });
