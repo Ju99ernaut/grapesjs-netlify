@@ -65,7 +65,7 @@ export default class NetlifyDashboard {
 
     async onRender() {
         const { user } = this.state;
-        if (!user.token && !this.opts.token) return;
+        if (!user.token) return;
 
         /* Set request loading state */
         this.setState({
