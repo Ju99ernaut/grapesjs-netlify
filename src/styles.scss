@@ -3,6 +3,13 @@ $prefix: 'gjs-' !default;
 /* Netlify color */
 $colorNetlify: #00ad9f;
 
+:root {
+    --border-color: rgba(0, 0, 0, 0.15);
+    --background-color: #3c4a49;
+
+    --background-box-title: #263332;
+}
+
 .#{$prefix}mdl-dialog-ntl {
     max-width: 1300px;
     margin-top: 45px;
@@ -251,6 +258,288 @@ $colorNetlify: #00ad9f;
 .site-repo-link {
     display: none;
     font-size: 12px;
+}
+
+/*
+ * Drawflow styles
+ */
+
+.wrapper {
+    width: 100%;
+    height: calc(100vh - 67px);
+    display: flex;
+}
+
+.col {
+    overflow: auto;
+    min-width: 200px;
+    height: 100%;
+}
+
+.drag-drawflow {
+    line-height: 50px;
+    margin: 5px 5px 5px 0px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15);
+    transition: .2s;
+    padding-left: 20px;
+    cursor: move;
+    user-select: none;
+
+    &:hover {
+        color: $colorNetlify;
+        box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.15);
+    }
+}
+
+.menu {
+    position: absolute;
+    height: 40px;
+    display: block;
+
+    ul {
+        padding: 0px;
+        margin-top: -5px;
+        line-height: 40px;
+    }
+
+    ul li {
+        display: inline-block;
+        margin-left: 10px;
+        padding-right: 10px;
+        line-height: 40px;
+        cursor: pointer;
+        transition: .3s;
+
+        &.selected {
+            color: $colorNetlify;
+            border-bottom: 4px solid $colorNetlify;
+            font-weight: bold;
+        }
+    }
+}
+
+.btn-export,
+.btn-clear {
+    color: white;
+    background: $colorNetlify;
+    padding: 13px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.btn-export {
+    float: right;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.btn-clear {
+    float: right;
+    position: absolute;
+    top: 10px;
+    right: 100px;
+}
+
+.swal-wide {
+    width: 80% !important;
+}
+
+.btn-lock {
+    float: right;
+    position: absolute;
+    bottom: 10px;
+    right: 140px;
+    display: flex;
+    font-size: 24px;
+    color: $colorNetlify;
+    padding: 5px 10px;
+    background: #555555;
+    border-radius: 4px;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.15);
+    z-index: 5;
+    cursor: pointer;
+}
+
+.bar-zoom {
+    float: right;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    font-size: 24px;
+    color: $colorNetlify;
+    padding: 5px 10px;
+    background: #555555;
+    border-radius: 4px;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.15);
+    z-index: 5;
+
+    i {
+        cursor: pointer;
+        padding-left: 10px;
+    }
+}
+
+#drawflow {
+    position: relative;
+    width: calc(100vw - 370px);
+    height: calc(100% - 50px);
+    top: 40px;
+    background: rgba(30, 30, 30, 0.2);
+    background-size: 10px 10px;
+    background-image:
+        linear-gradient(to right, #00ad9f24 1px, transparent 1px),
+        linear-gradient(to bottom, #00ad9f24 1px, transparent 1px);
+}
+
+@media only screen and (max-width: 768px) {
+    .col {
+        width: 50px;
+    }
+
+    .col .drag-drawflow span {
+        display: none;
+    }
+
+    #drawflow {
+        width: calc(100vw - 51px);
+    }
+}
+
+/* Editing Drawflow */
+
+.drawflow .drawflow-node {
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    -webkit-box-shadow: 0 2px 15px 2px var(--border-color);
+    box-shadow: 0 2px 15px 2px var(--border-color);
+    padding: 0px;
+    width: 200px;
+
+    &.selected {
+        background: white;
+        border: 1px solid #4ea9ff;
+        -webkit-box-shadow: 0 2px 20px 2px $colorNetlify;
+        box-shadow: 0 2px 20px 2px $colorNetlify;
+
+        .title-box {
+            color: #22598c;
+            /*border-bottom: 1px solid #4ea9ff;*/
+        }
+    }
+}
+
+.drawflow .connection .main-path {
+    stroke: #4ea9ff;
+    stroke-width: 3px;
+}
+
+.drawflow .drawflow-node .input,
+.drawflow .drawflow-node .output {
+    height: 15px;
+    width: 15px;
+    background: $colorNetlify;
+    border: 2px solid var(--border-color);
+
+    &:hover {
+        background: #4ea9ff;
+    }
+}
+
+.drawflow .drawflow-node .output {
+    right: 10px;
+}
+
+.drawflow .drawflow-node .input {
+    left: -10px;
+    background: $colorNetlify;
+}
+
+.drawflow>.drawflow-delete {
+    border: 2px solid #43b993;
+    background: white;
+    color: #43b993;
+    -webkit-box-shadow: 0 2px 20px 2px #43b993;
+    box-shadow: 0 2px 20px 2px #43b993;
+}
+
+.drawflow-delete {
+    border: 2px solid #4ea9ff;
+    background: white;
+    color: #4ea9ff;
+    -webkit-box-shadow: 0 2px 20px 2px #4ea9ff;
+    box-shadow: 0 2px 20px 2px #4ea9ff;
+}
+
+.drawflow-node .title-box {
+    height: 50px;
+    line-height: 50px;
+    color: #f5f5f5;
+    background: var(--background-box-title);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px 4px 0px 0px;
+    padding-left: 10px;
+}
+
+.drawflow .title-box svg {
+    position: initial;
+}
+
+.drawflow-node .box {
+    padding: 10px 20px 20px 20px;
+    font-size: 14px;
+    color: rgb(212, 212, 212);
+
+    a {
+        color: $colorNetlify;
+        text-decoration: none;
+    }
+
+    p {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+}
+
+.drawflow-node.welcome {
+    width: 250px;
+}
+
+.drawflow-node.slack .title-box {
+    border-radius: 4px;
+}
+
+.drawflow-node input,
+.drawflow-node select,
+.drawflow-node textarea {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    width: 158px;
+    color: white;
+}
+
+.drawflow-node textarea {
+    height: 100px;
+}
+
+.drawflow .connection .point {
+    stroke: var(--border-color);
+    stroke-width: 2;
+    fill: white;
+    transform: translate(-9999px, -9999px);
+}
+
+.drawflow .connection .point.selected,
+.drawflow .connection .point:hover {
+    fill: #4ea9ff;
 }
 
 @keyframes fadein {
