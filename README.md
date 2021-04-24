@@ -21,7 +21,7 @@ Netlify dashboard for deploying sites directly in grapesjs
 ### JS
 ```js
 const editor = grapesjs.init({
-	container: '#gjs',
+  container: '#gjs',
   height: '100%',
   fromElement: true,
   storageManager: false,
