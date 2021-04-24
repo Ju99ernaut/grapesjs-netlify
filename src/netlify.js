@@ -25,7 +25,6 @@ export default class NetlifyDashboard {
         /* Protect against csrf (cross site request forgery https://bit.ly/1V1AvZD) */
         if (response.token && !localStorage.getItem(response.csrf)) {
             opts.onInvalidToken();
-            return;
         }
 
         /* Clean up csrfToken */
@@ -146,9 +145,9 @@ export default class NetlifyDashboard {
     renderSiteList() {
         const { sites, filterText, loading, sortBy, sortOrder } = this.state;
 
-        if (loading) {
-            return this.opts.loader || `<div>Loading sites...</div>`;
-        }
+        if (loading) return this.opts.loader || `<div>Loading sites...</div>`;
+
+        if (!sites.length) return this.opts.nodeploys || `<div>No deploys</div>`;
 
         let order
         if (sortBy === 'published_at') {
