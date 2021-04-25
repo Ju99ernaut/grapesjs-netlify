@@ -10,7 +10,7 @@ $colorNetlify: #00ad9f;
     --background-box-title: #263332;
 }
 
-.#{$prefix}mdl-dialog-ntl {
+.#{$prefix}mdl-dialog.#{$prefix}mdl-dialog-ntl {
     max-width: 1300px;
     margin-top: 45px;
 }
