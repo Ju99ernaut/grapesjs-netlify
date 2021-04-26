@@ -185,8 +185,30 @@ If you're interested in contributing to the project these could be good starting
 
 - [x] Multi-page deploys(Already possible)
 - [ ] Serverless functions(See `functions` branch)
-- [ ] Forms
+- [x] Forms([grapesjs-plugin-forms](https://github.com/artf/grapesjs-plugin-forms) can be made compatible)
 - [ ] More settings(Domain management)
+
+### Forms
+
+```js
+//make forms netlify compatible
+const domc = editor.Components;
+const typeForm = domc.getType('form').model;
+domc.addType('form', {
+    model: {
+        initTraits() {
+            typeForm.prototype.initTraits.apply(this, arguments);
+            const tr = this.get('traits');
+            tr.push({
+                type: 'checkbox',
+                name: 'data-netlify',
+                label: 'Netlify'
+            });
+            this.set('traits', tr);
+        }
+    }
+});
+```
 
 ## License
 
