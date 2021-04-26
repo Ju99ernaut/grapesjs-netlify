@@ -122,7 +122,7 @@ export default class NetlifyDashboard {
 
     handleLogout = e => {
         e.preventDefault();
-        window.location.href = `/`;
+        window.location.href = `${location.origin}${location.pathname}`;
     }
 
     handleFilterInput = e => {
