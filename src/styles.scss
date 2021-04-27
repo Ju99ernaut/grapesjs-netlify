@@ -348,11 +348,12 @@ $colorNetlify: #00ad9f;
     width: 80% !important;
 }
 
+.btn-add,
+.btn-delete,
 .btn-lock {
     float: right;
     position: absolute;
     bottom: 10px;
-    right: 140px;
     display: flex;
     font-size: 24px;
     color: $colorNetlify;
@@ -362,6 +363,34 @@ $colorNetlify: #00ad9f;
     box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.15);
     z-index: 5;
     cursor: pointer;
+}
+
+.btn-add {
+    left: 10px;
+
+    input {
+        background-color: rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+        padding: 5px;
+        color: white;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    i {
+        margin-left: 5px;
+    }
+}
+
+.btn-delete {
+    right: 180px;
+}
+
+.btn-lock {
+    right: 140px;
 }
 
 .bar-zoom {
@@ -381,6 +410,23 @@ $colorNetlify: #00ad9f;
     i {
         cursor: pointer;
         padding-left: 10px;
+    }
+}
+
+#drawflow-code {
+    position: relative;
+    width: calc(100vw - 370px);
+    height: calc(100% - 50px);
+    top: 50px;
+    overflow-y: auto;
+
+    .CodeMirror-scroll {
+        margin-bottom: 0;
+    }
+
+    .CodeMirror {
+        height: 100%;
+        min-height: 580px;
     }
 }
 
@@ -421,15 +467,15 @@ $colorNetlify: #00ad9f;
     width: 200px;
 
     &.selected {
-        background: white;
+        background: var(--background-color);
         border: 1px solid #4ea9ff;
         -webkit-box-shadow: 0 2px 20px 2px $colorNetlify;
         box-shadow: 0 2px 20px 2px $colorNetlify;
 
-        .title-box {
+        /*.title-box {
             color: #22598c;
-            /*border-bottom: 1px solid #4ea9ff;*/
-        }
+            border-bottom: 1px solid #4ea9ff;
+        }*/
     }
 }
 
@@ -489,7 +535,7 @@ $colorNetlify: #00ad9f;
     position: initial;
 }
 
-.drawflow-node .box {
+.drawflow-node .flow-box {
     padding: 10px 20px 20px 20px;
     font-size: 14px;
     color: rgb(212, 212, 212);
@@ -524,6 +570,10 @@ $colorNetlify: #00ad9f;
     font-size: 16px;
     width: 158px;
     color: white;
+
+    &:focus {
+        outline: none;
+    }
 }
 
 .drawflow-node textarea {
