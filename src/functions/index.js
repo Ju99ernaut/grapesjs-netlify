@@ -5,6 +5,10 @@ export default (editor, opts = {}) => {
     const cm = editor.Commands;
     const pfx = editor.getConfig('stylePrefix');
     const mdlClass = `${pfx}mdl-dialog-ntl`;
+    const { $el, flowEditor, setZoom } = flowchart(editor, opts);
+
+    setZoom();
+    editor.NetlifyDashboard.flowEditor = flowEditor;
 
     cm.add('netlify-functions', {
         run(editor, sender) {
@@ -12,10 +16,8 @@ export default (editor, opts = {}) => {
             mdlDialog.classList.add(mdlClass);
             sender?.set && sender.set('active');
             mdl.setTitle(opts.mdlTitle);
-            const { $el, flowEditor } = flowchart(editor, opts)
             mdl.setContent($el);
             mdl.open();
-            flowEditor.changeModule('Home');
             mdl.getModel().once('change:open', () => {
                 mdlDialog.classList.remove(mdlClass);
             });

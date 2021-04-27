@@ -43,9 +43,15 @@ export default (editor, opts = {}) => {
       filenamePfx: 'grapesjs_template',
       filename: null,
       root: {
+        functions: {
+          '.env': '',
+          'package.json': ''
+        },
         css: {
           'style.css': ed => ed.getCss(),
         },
+        'package.json': '',
+        'netlify.toml': '',
         'index.html': ed =>
           `<!DOCTYPE html>
         <html lang="en">
@@ -72,5 +78,5 @@ export default (editor, opts = {}) => {
   // Add commands
   commands(editor, options);
   // Add functions
-  functions(editor, options);
+  window.Drawflow && functions(editor, options);
 };
