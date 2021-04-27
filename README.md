@@ -6,7 +6,7 @@ Netlify dashboard for deploying sites directly in grapesjs
 
 ![Screenshot](Screenshot.png)
 
-[DEMO](##)
+[DEMO](https://blocomposer.com)
 
 ### HTML
 ```html
@@ -87,7 +87,7 @@ Using `async` in `root`:
 ```
 
 * `authUrl` reference https://github.com/netlify-labs/oauth-example
-* serverless function template https://github.com/Ju99ernaut/netlify-auth-serverless
+* serverless function template https://github.com/Ju99ernaut/netlify-oauth-serverless
 
 ## Download
 
