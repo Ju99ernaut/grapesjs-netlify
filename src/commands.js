@@ -61,7 +61,7 @@ export default (editor, opts = {}) => {
             }
         },
 
-        run(editor, sender, options = { save: true, clb: null }) {
+        run(editor, sender, options = {}) {
             const zip = new JSZip();
             const { save, clb } = options;
             this.createDirectory(zip, opts.root)
@@ -81,7 +81,7 @@ export default (editor, opts = {}) => {
     if (opts.addExportBtn) {
         editor.on('run:export-template', () => {
             mdl.getContentEl().appendChild(btnExp.get(0));
-            btnExp.on('click', () => editor.runCommand(cmdExport));
+            btnExp.on('click', () => editor.runCommand(cmdExport, { save: true, clb: null }));
         });
     }
 }
