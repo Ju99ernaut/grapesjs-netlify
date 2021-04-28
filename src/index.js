@@ -43,15 +43,12 @@ export default (editor, opts = {}) => {
       filenamePfx: 'grapesjs_template',
       filename: null,
       root: {
-        functions: {
-          '.env': '',
-          'package.json': ''
-        },
+        functions: (ed) => ed.getFunctions(),
         css: {
           'style.css': ed => ed.getCss(),
         },
-        'package.json': '',
-        'netlify.toml': '',
+        'package.json': '{"name":"blocomposer-site","version":"0.1.0","scripts":{"build":"cd functions && npm install"}}',
+        'netlify.toml': '[build]\n  command = "npm run build"\n  functions = "functions"',
         'index.html': ed =>
           `<!DOCTYPE html>
         <html lang="en">
