@@ -1,11 +1,12 @@
 import { nodes } from './nodes';
+import compiler from './compiler';
 
 export default (editor, opts = {}) => {
     const { $ } = editor;
 
     const codeViewer = editor.CodeManager.createViewer({
         codeName: 'javascript',
-        theme: 'hopscotch',
+        theme: 'material',
         readOnly: 1,
         autoBeautify: 1,
     });
@@ -45,6 +46,9 @@ export default (editor, opts = {}) => {
                 <div class="btn-add">
                     <input id="name" type="text" placeholder="name"/>
                     <i id="add" class="fa fa-plus"></i>
+                </div>
+                <div class="btn-preview">
+                    <i id="preview" class="fa fa-code"></i>
                 </div>
                 <div class="btn-delete">
                     <i id="delete" class="fa fa-trash"></i>
@@ -168,6 +172,13 @@ export default (editor, opts = {}) => {
     });
     $el.find('.btn-clear').click(ev => {
         flowEditor.clearModuleSelected();
+    });
+    $el.find('#preview').click(ev => {
+        const selected = $el.find('.menu ul li.selected');
+        const code = compiler(flowEditor.export())[selected.text().trim() + '.js'] || '';
+        canvas.hide();
+        codeCont.show();
+        codeViewer.setContent(code);
     });
     $el.find('#lock').click(ev => {
         flowEditor.editor_mode = 'fixed';
