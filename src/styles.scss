@@ -350,7 +350,8 @@ $colorNetlify: #00ad9f;
 
 .btn-add,
 .btn-delete,
-.btn-lock {
+.btn-lock,
+.btn-preview {
     float: right;
     position: absolute;
     bottom: 10px;
@@ -383,6 +384,10 @@ $colorNetlify: #00ad9f;
     i {
         margin-left: 5px;
     }
+}
+
+.btn-preview {
+    right: 225px;
 }
 
 .btn-delete {

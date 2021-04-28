@@ -6,9 +6,23 @@ export const nodes = [{
     },
     inputs: 0,
     outputs: 1,
-    data: {},
+    data: {
+        script: 'const { {[events]} } = event;',
+        events: 'path'
+    },
     html: `<div>
         <div class="title-box"><i class="fa fa-bell"></i> Event</div>
+        <div class="flow-box">
+            <p>Event item</p>
+            <select df-events>
+                <option value="path">path</option>
+                <option value="httpMethod">method</option>
+                <option value="headers">headers</option>
+                <option value="queryStringParameters">query</option>
+                <option value="body">body</option>
+                <option value="isBase64Encoded">Base64</option>
+            </select>
+        </div>
     </div>`
 }, {
     name: 'context',
@@ -18,9 +32,57 @@ export const nodes = [{
     },
     inputs: 0,
     outputs: 1,
-    data: {},
+    data: {
+        script: 'const { {[context]} } = context;',
+        context: ''
+    },
     html: `<div>
         <div class="title-box"><i class="fa fa-cube"></i> Context</div>
+        <div class="flow-box">
+            <p>Request context</p>
+            <input type="text" df-context placeholder="context"/>
+        </div>
+    </div>`
+}, {
+    name: 'env',
+    label: 'Enviroment',
+    attributes: {
+        class: 'fa fa-key'
+    },
+    inputs: 0,
+    outputs: 1,
+    data: {
+        script: 'const {[variable]} = process.env.{[variable]};',
+        variable: ''
+    },
+    html: `<div>
+        <div class="title-box"><i class="fa fa-key"></i> Enviroment</div>
+        <div class="flow-box">
+            <p>Enviroment variable</p>
+            <input type="text" df-variable placeholder="ENV_VAR"/>
+        </div>
+    </div>`
+}, {
+    name: 'identity',
+    label: 'Identity',
+    attributes: {
+        class: 'fa fa-user-circle'
+    },
+    inputs: 0,
+    outputs: 1,
+    data: {
+        script: 'context.clientContext.user',
+        user: 'loggedin'
+    },
+    html: `<div>
+        <div class="title-box"><i class="fa fa-user-circle"></i> Identity</div>
+        <div class="flow-box">
+            <p>Fetch response</p>
+            <select df-user>
+                <option value="loggedin">Logged In</option>
+                <option value="loggedout">Logged Out</option>
+            </select>
+        </div>
     </div>`
 }, {
     name: 'fetch',
@@ -31,6 +93,7 @@ export const nodes = [{
     inputs: 0,
     outputs: 1,
     data: {
+        script: 'const res = await fetch({[url]}, { method: {[method]}, ...{[input]} })',
         method: 'get',
         url: ''
     },
@@ -59,7 +122,8 @@ export const nodes = [{
     inputs: 1,
     outputs: 1,
     data: {
-        result: 'json()',
+        script: 'const data = await {[input]}.{[result]};',
+        result: 'json()'
     },
     html: `<div>
         <div class="title-box"><i class="fa fa-paper-plane"></i> Response</div>
@@ -85,7 +149,9 @@ export const nodes = [{
     },
     inputs: 1,
     outputs: 0,
-    data: {},
+    data: {
+        script: 'console.log({[input]})',
+    },
     html: `<div>
         <div class="title-box"><i class="fa fa-file-text"></i> Save log file </div>
     </div>`
@@ -98,6 +164,7 @@ export const nodes = [{
     inputs: 1,
     outputs: 1,
     data: {
+        script: 'const template = `{[template]}`;',
         template: 'Write your template'
     },
     html: `<div>
@@ -116,8 +183,15 @@ export const nodes = [{
     },
     inputs: 1,
     outputs: 0,
-    data: {},
+    data: {
+        script: 'return { status: {[status]}, ...{[input]} }',
+        status: 200
+    },
     html: `<div>
         <div class="title-box"><i class="fa fa-eject"></i> Return </div>
+        <div class="flow-box">
+            <p>Status code</p>
+            <input type="number" df-status placeholder="200">
+        </div>
     </div>`
 }]
