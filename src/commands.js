@@ -61,7 +61,7 @@ export default (editor, opts = {}) => {
             }
         },
 
-        run(editor, sender, options = { save: true, clb: null }) {
+        run(editor, sender, options = {}) {
             const zip = new JSZip();
             const { save, clb } = options;
             this.createDirectory(zip, opts.root)
@@ -72,7 +72,7 @@ export default (editor, opts = {}) => {
                             let filename = filenameFn ? filenameFn(editor) :
                                 `${opts.filenamePfx}_${Date.now()}.zip`;
                             save && FileSaver.saveAs(content, filename);
-                            clb && clb(content, filename);
+                            clb && typeof clb === 'function' && clb(content, filename);
                         });
                 });
         }
@@ -81,7 +81,7 @@ export default (editor, opts = {}) => {
     if (opts.addExportBtn) {
         editor.on('run:export-template', () => {
             mdl.getContentEl().appendChild(btnExp.get(0));
-            btnExp.on('click', () => editor.runCommand(cmdExport));
+            btnExp.on('click', () => editor.runCommand(cmdExport, { save: true }));
         });
     }
 }
