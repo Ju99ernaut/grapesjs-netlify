@@ -1,6 +1,6 @@
 import NetlifyDashboard from './netlify';
 import commands from './commands';
-import functions from './functions';
+//import functions from './functions';
 
 export default (editor, opts = {}) => {
   const options = {
@@ -72,5 +72,5 @@ export default (editor, opts = {}) => {
   // Add commands
   commands(editor, options);
   // Add functions
-  functions(editor, options);
+  // functions(editor, options);
 };
