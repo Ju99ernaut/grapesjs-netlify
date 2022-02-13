@@ -24,7 +24,7 @@ export default class NetlifyDashboard {
 
         /* Protect against csrf (cross site request forgery https://bit.ly/1V1AvZD) */
         if (response.token && !localStorage.getItem(response.csrf)) {
-            opts.onInvalidToken();
+            opts.onInvalidToken(editor);
         }
 
         /* Clean up csrfToken */
@@ -101,10 +101,10 @@ export default class NetlifyDashboard {
             else url = `sites`;
             api('', url, {}, options)
                 .then(res => {
-                    opts.onDeploy(res);
+                    opts.onDeploy(res, editor);
                     console.log('deploy: ', res);
                 })
-                .catch(err => opts.onDeployErr(err));
+                .catch(err => opts.onDeployErr(err, editor));
         }
         editor.runCommand('gjs-export-zip', { save: false, clb });
     }
