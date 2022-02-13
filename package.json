@@ -1,6 +1,6 @@
 {
     "name": "grapesjs-netlify",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Grapesjs Netlify",
     "main": "dist/grapesjs-netlify.min.js",
     "repository": {
