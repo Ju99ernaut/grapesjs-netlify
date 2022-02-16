@@ -1,5 +1,6 @@
 import NetlifyDashboard from './netlify';
 import commands from './commands';
+import en from './locale/en';
 //import functions from './functions';
 
 export default (editor, opts = {}) => {
@@ -63,8 +64,14 @@ export default (editor, opts = {}) => {
         </html>`
       },
       isBinary: null,
+      i18n: {},
     }, ...opts
   };
+
+  editor.I18n.addMessages({
+    en,
+    ...options.i18n,
+  });
 
   // Init and add dashboard object to editor
   editor.NetlifyDashboard = new NetlifyDashboard(editor, options);
