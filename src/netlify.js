@@ -87,7 +87,7 @@ export default class NetlifyDashboard {
     deploy = () => {
         const { projectId, user } = this.state;
         const { editor, opts } = this;
-        const clb = (content, filename) => {
+        const clb = async (content, filename) => {
             let url;
             const options = {
                 method: 'POST',
@@ -99,12 +99,13 @@ export default class NetlifyDashboard {
             };
             if (projectId) url = `sites/${projectId}/deploys`;
             else url = `sites`;
-            api('', url, {}, options)
-                .then(res => {
-                    opts.onDeploy(res, editor);
-                    console.log('deploy: ', res);
-                })
-                .catch(err => opts.onDeployErr(err, editor));
+            try {
+                const res = await opts.onDeployAsync(api('', url, {}, options));
+                opts.onDeploy(res, editor);
+                console.log('deploy: ', res);
+            } catch (err) {
+                opts.onDeployErr(err, editor);
+            }
         }
         editor.runCommand('gjs-export-zip', { save: false, clb });
     }

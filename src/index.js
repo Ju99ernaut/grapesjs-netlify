@@ -32,6 +32,11 @@ export default (editor, opts = {}) => {
         alert(`Successful deployment\n${deploy.url}`);
       },
 
+      // Gives deploy as promise and must return that promise
+      onDeployAsync(deploy) {
+        return deploy;
+      },
+
       // On deploy error
       onDeployErr(err) {
         alert('Deployment failed');
@@ -64,6 +69,7 @@ export default (editor, opts = {}) => {
         </html>`
       },
       isBinary: null,
+      onGenerateAsyn(createDir) { },
       i18n: {},
     }, ...opts
   };

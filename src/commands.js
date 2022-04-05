@@ -64,7 +64,7 @@ export default (editor, opts = {}) => {
         run(editor, sender, options = {}) {
             const zip = new JSZip();
             const { save, clb } = options;
-            this.createDirectory(zip, opts.root)
+            opts.onGenerateAsyn(this.createDirectory(zip, opts.root)
                 .then(() => {
                     zip.generateAsync({ type: 'blob' })
                         .then(content => {
@@ -74,7 +74,8 @@ export default (editor, opts = {}) => {
                             save && FileSaver.saveAs(content, filename);
                             clb && typeof clb === 'function' && clb(content, filename);
                         });
-                });
+                })
+            )
         }
     });
 
