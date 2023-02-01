@@ -6,7 +6,7 @@ Netlify dashboard for deploying sites directly in grapesjs
 
 ![Screenshot](Screenshot.png)
 
-[DEMO](https://blocomposer.com)
+[DEMO](https://blocomposer.app)
 
 ### HTML
 ```html
