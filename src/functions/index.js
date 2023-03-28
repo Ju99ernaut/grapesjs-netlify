@@ -25,7 +25,7 @@ export default (editor, opts = {}) => {
     }
     editor.getFunctions = () => {
         return {
-            '.env': editor.NetlifyDashboard.getDotEnv,
+            '.env': editor.NetlifyDashboard.getDotEnv(),
             'package.json': '{"name":"backend-functions","version":"0.1.0","private":true,"dependencies":{"node-fetch":"^2.3.0"}}',
             ...compiler(flowEditor.export())
         }
