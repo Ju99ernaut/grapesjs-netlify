@@ -28,8 +28,10 @@ export default (editor, opts = {}) => {
       },
 
       // On deploy succes
-      onDeploy(deploy) {
+      onDeploy(deploy, editor) {
+        console.log('deploy: ', deploy);
         alert(`Successful deployment\n${deploy.url}`);
+        editor.Modal.close();
       },
 
       // Gives deploy as promise and must return that promise

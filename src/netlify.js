@@ -100,9 +100,24 @@ export default class NetlifyDashboard {
             if (projectId) url = `sites/${projectId}/deploys`;
             else url = `sites`;
             try {
-                const res = await opts.onDeployAsync(api('', url, {}, options));
-                opts.onDeploy(res, editor);
-                console.log('deploy: ', res);
+                if (projectId) {
+                    const deployClb = async () => {
+                        await api('', url, {}, options);
+                        const res = await api(window.atob(user.token), `sites/${projectId}`);
+                        opts.onDeploy(res, editor);
+                    }
+                    opts.onDeployAsync(deployClb());
+                } else {
+                    const deployClb = async () => {
+                        await api('', url, {}, options);
+                        const sites = await api(window.atob(user.token), 'sites', {
+                            filter: 'all'
+                        });
+                        opts.onDeploy(sites[0], editor);
+                        this.setState({ sites });
+                    }
+                    opts.onDeployAsync(deployClb());
+                }
             } catch (err) {
                 opts.onDeployErr(err, editor);
             }
@@ -277,8 +292,12 @@ export default class NetlifyDashboard {
         if (sites) {
             sites.on('click', e => {
                 sites.removeClass('selected');
-                this.$(e.currentTarget).addClass('selected');
-                this.setStateSilent({ projectId: e.currentTarget.dataset.id });
+                if (this.state.projectId === e.currentTarget.dataset.id) {
+                    this.setStateSilent({ projectId: '' })
+                } else {
+                    this.$(e.currentTarget).addClass('selected');
+                    this.setStateSilent({ projectId: e.currentTarget.dataset.id });
+                }
             });
         }
     }
